@@ -2,56 +2,141 @@
 <html>
 <head>
 <meta charset='utf-8' />
-<title>Add a GeoJSON polygon</title>
+<title>Chandrapur District</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
-<script type="text/javascript" src="/home/bharat/Downloads/ballarpur_data.json"></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
 <style>
-body { margin:0; padding:0; }
-#map { position:absolute; top:0; bottom:0; width:100%; }
+  body { margin:0; padding:0; }
+  .container{
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+    margin: 0%
+  }
+
+  #map { position:absolute; top:0; bottom:0; width:100%; height: 100%;}
+
+  #draggable { width: 150px; height: 150px; padding: 0.5em; border: 2px solid black; z-index: 999; background-color:cornflowerblue; margin-left: 10%; margin-top: 10%}
+
+
+  
 </style>
+
+<script>
+    $( function() {
+        $( "#draggable" ).draggable();
+    } );
+</script>
 </head>
 <body>
  
-<div id='map'></div>
-<script>
+<div class="container">
 
+    <div id="draggable" class="ui-widget-content">
+        <form id="radio_btns">
+            <div class="radio">
+                <label><input type="radio" name="optradio" onchange="showLayer('1')" checked>Lok Sabha Elections 2019</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio" onchange="showLayer('2')">Lok Sabha Elections 2014</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio" onchange="showLayer('3')">Vidhan Sabha elections 2014</label>
+            </div>
+        </form>
+    </div>
+               
+
+    <div id='map'></div>
+
+    
+
+
+</div>
+<script>
   mapboxgl.accessToken = 'pk.eyJ1IjoidmlyYWw5OTlnIiwiYSI6ImNqeWloejNuYTA5c3IzY3FpbTRsMDNhNzUifQ.kC5CsBwOOiw7nvzyppoZkQ';
   var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v11',
-  center: [79.32438658700005, 19.774990290000066],
-  zoom: 9
+  center: [79.53157424926758, 20.03166103287417],
+  zoom: 10, 
+  minZoom: 10
   });
+
+  var popup = new mapboxgl.Popup({
+        closeButton: false
+    });
   
   map.on('load', function () {
   
-  map.addLayer({
+  map.addLayer(
+    {
   'id': 'maine',
   'type': 'fill',
   'source': {
   'type': 'geojson',
-  'data': 'ballarpur_data.json'
+  'data': 'final_abc1.json'
   },
   'layout': {},
   'paint': {
-  'fill-color': '#000',
-  'fill-opacity': 0.8
+    'fill-color': {
+        type: 'identity',
+        property: 'color',
+    },
+    'fill-opacity': 0.8
   }
-  });
+  }
+  );
   });
 
-  map.on('click', 'maine', function (e) {
-    new mapboxgl.Popup()
+
+  function showLayer(radio_id){
+      if(radio_id == '1'){
+          map.getSource('maine').setData('final_abc1.json')
+      }
+      else if(radio_id == '2'){
+          map.getSource('maine').setData('final_abc2.json')
+      }
+      else if(radio_id == '3'){
+          map.getSource('maine').setData('final_abc3.json')
+      }
+  }
+
+  map.on('mousemove', 'maine', function (e) {
+    map.getCanvas().style.cursor = 'pointer';
+
+
+    popup
     .setLngLat(e.lngLat)
-    .setHTML("<h3>Village Name: </h3>" + e.features[0].properties.NAME + "<br><h3>District</h3>: " + e.features[0].properties.DISTRICT)
+    .setHTML(e.features[0].properties.name_en)
     .addTo(map);
-    // console.log(e.features[0]);
   });
+
+  map.on('mouseleave', 'maine', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    map.on('click', 'maine', function(e) {
+        location_id = e.features[0].properties.loc_id;
+        console.log(location_id)
+        window.open("http://13.59.213.80/ballarpur/village_data.html?location_id=" + location_id)
+    });
 
 
 </script>
+
+
  
 </body>
 </html>

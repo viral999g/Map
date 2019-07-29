@@ -1,0 +1,250 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+
+    <style>
+        body{
+            padding: 10px
+        }
+
+    </style>
+
+    <body>
+            <table class="table table-bordered" style="text-align: center; page-break-before: always">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="6" class="header">मतदान क्षेत्राची भौगोलिक राजनैतिक रूपरेखा</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="thead-light" style="font-weight: bolder">पोलिंग बूथ संख्या</td>
+                        <td id="name_pb"></td>
+                        <td class="thead-light" style="font-weight: bolder">मुख्य गांव/ नगर</td>
+                        <td id="name_hi"></td>
+                        <td class="thead-light" style="font-weight: bolder">तालुका</td>
+                        <td id="district_name"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-bordered" style="text-align: center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="6" class="header">जातिगत आकडा</th>
+                    </tr>
+
+                    <tr class="thead-light">
+                        <th class="header">क्र0 सं0</th>
+                        <th class="header">जाति</th>
+                        <th class="header">मत</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbody_caste_data">
+                </tbody>
+            </table>
+
+            <table class="table table-bordered" style="text-align: center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="8" class="header">प्रमुख राजनीतिक व्यक्ति</th>
+                    </tr>
+
+                    <tr class="thead-light">
+                        <th class="header">क्र0 सं0</th>
+                        <th class="header">पद</th>
+                        <th class="header">नाव</th>
+                        <th class="header">वडिलांचा नाव</th>
+                        <th class="header">जाति</th>
+                        <th class="header">उम्र</th>
+                        <th class="header">पार्टी</th>
+                        <th class="header">मोबाइल</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbody_influential">
+                </tbody>
+            </table>
+
+            <table class="table table-bordered" style="text-align: left; padding: 10%">
+                <thead class="thead-dark" style="text-align: center;" >
+                    <tr>
+                        <th colspan="6" class="header">प्रमुख मुद्दा</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbody_issues">
+                </tbody>
+            </table>
+
+            <table class="table table-bordered" style="text-align: center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="5" class="header">2019 Election Result</th>
+                    </tr>
+
+                    <tr class="thead-light" id="2019_summary" style="background:blue !important">
+                        <th class="subheader">Sr No</th>
+                        <th class="subheader">Name</th>
+                        <th class="subheader">Party</th>
+                        <th class="subheader">Votes</th>
+                        <th class="subheader">Vote %</th>
+                    </tr>
+                </thead>
+
+                <tbody id="2019_data">
+                </tbody>
+            </table>
+
+
+            <table class="table table-bordered" style="text-align: center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="5" class="header">2014 Lok Sabha</th>
+                    </tr>
+
+                    <tr class="thead-light" >
+                        <th class="subheader">Sr No</th>
+                        <th class="subheader">Name</th>
+                        <th class="subheader">Party</th>
+                        <th class="subheader">Votes</th>
+                        <th class="subheader">Vote %</th>
+                    </tr>
+                </thead>
+
+                <tbody id="2014_ls_data">
+                </tbody>
+            </table>
+
+            <table class="table table-bordered" style="text-align: center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="5" class="header">2014 Vidhan Sabha</th>
+                    </tr>
+
+                    <tr class="thead-light">
+                        <th class="subheader">Sr No</th>
+                        <th class="subheader">Name</th>
+                        <th class="subheader">Party</th>
+                        <th class="subheader">Votes</th>
+                        <th class="subheader">Vote %</th>
+                    </tr>
+                </thead>
+
+                <tbody id="2014_vs_data">
+                </tbody>
+            </table>
+    </body>
+
+    <script>
+
+
+        location_id = getQueryStringValue("location_id");
+
+        var pb_list = document.getElementById('name_pb')
+        var village_name_hi = document.getElementById('name_hi')
+        var district_name = document.getElementById('district_name')
+
+        var tbody_caste_data = document.getElementById('tbody_caste_data')
+        var tbody_influential = document.getElementById('tbody_influential')
+        var tbody_issues = document.getElementById('tbody_issues')
+        var summary_2019 = document.getElementById('2019_summary')
+        var data_2019 = document.getElementById('2019_data')
+        var ls_data_2014 = document.getElementById('2014_ls_data')
+        var vs_data_2014 = document.getElementById('2014_vs_data')
+
+
+        var caste_data_html = '';
+        var influential_data_html = '';
+        var issues_data_html = '';
+        var summary_2019_html = '';
+        var data_2019_html = '';
+        var data_2014_ls_html = '';
+        var data_2014_vs_html = '';
+
+        $(document).ready(function(){
+        $.ajax({ url: "http://13.59.213.80:8000/village_data?location_id=" + location_id,
+                type:'GET',
+                success: function(data){
+                    data = JSON.parse(data);
+                   pb_list.innerText = data['polling_booths'];
+                   village_name_hi.innerText = data['name_hi'];
+                   district_name.innerText = data['taluka'];
+                    
+                   caste_data = data['caste_data']
+                   caste_data.forEach(element => {
+                        caste_data_html += "<tr><td>"+ (parseInt(caste_data.indexOf(element)) + 1).toString() + "</td><td>" + element['caste'] + "</td><td>" + element['votes'] +"</td></tr>"
+                       
+                   });
+
+                   tbody_caste_data.innerHTML = caste_data_html;
+
+
+                   influential_data = data['influential_persons']
+                   influential_data.forEach(element => {
+                    influential_data_html += "<tr><td>"+ (parseInt(influential_data.indexOf(element)) + 1).toString() + "</td><td>" + element['pad'] + "</td><td>" + element['first_name'] + "</td><td>" + element['last_name'] + "</td><td>" + element['caste'] + "</td><td>" + element['age'] + "</td><td>" + element['party'] + "</td><td>" + element['mobile_no'] +"</td></tr>"
+                   });
+
+                   tbody_influential.innerHTML = influential_data_html;
+
+
+                   issues_data = data['issues']
+                   issues_data.forEach(element => {
+                    issues_data_html += "<tr><td>"+ (parseInt(issues_data.indexOf(element)) + 1).toString() + ")&nbsp&nbsp" + element + "</td></tr>"; 
+                   });
+
+                   tbody_issues.innerHTML = issues_data_html;
+
+
+                   json_2019 = data['election_2019']
+                   console.log(json_2019)
+                   var voters = json_2019['votes']
+                   var electors = json_2019['electors']
+                   var turnout = json_2019['turnout']
+
+                   summary_2019.innerHTML = "<tr><th colspan='2'> Electors - " + electors + "</th><th colspan='2'> Votes - " + voters + "</th><th colspan='2'> Turnout - " + parseInt(turnout).toString() + "%</th></tr>";
+
+                   votes_data_2019 = json_2019['votes_data']
+                   votes_data_2019.forEach(element => {
+                    data_2019_html += "<tr><td>"+ (parseInt(votes_data_2019.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
+                   });
+
+                   data_2019.innerHTML = data_2019_html;
+
+
+                   votes_data_2014_ls = data['ls_2014']['votes_data']
+                   votes_data_2014_ls.forEach(element => {
+                    data_2014_ls_html += "<tr><td>"+ (parseInt(votes_data_2014_ls.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
+                   });
+
+                   ls_data_2014.innerHTML = data_2014_ls_html;
+
+
+                   votes_data_2014_vs = data['vs_2014']['votes_data']
+                   votes_data_2014_vs.forEach(element => {
+                    data_2014_vs_html += "<tr><td>"+ (parseInt(votes_data_2014_vs.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
+                   });
+
+                   vs_data_2014.innerHTML = data_2014_vs_html;
+
+                }});
+        });
+
+
+        function getQueryStringValue (key) {  
+            return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+        } 
+    
+    </script>
+
+    
+
+</html>
