@@ -3,12 +3,6 @@ import pymongo, os
 
 app = Flask(__name__)
 
-# myclient = pymongo.MongoClient("mongodb://13.59.213.80:27017/",
-#                             username='candles123',
-#                             password='D1}d-0oMe[Ts8f>OPcjH,aiC',
-#                             authSource='admin',
-#                             connect=False)
-
 myclient = pymongo.MongoClient("mongodb://localhost:27017/",
                             connect=False)
 
@@ -32,7 +26,7 @@ def village_data():
         return resp
 
 
-port = int(os.environ.get('PORT', 8001))
+port = int(os.environ.get('PORT', 8000))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=port)

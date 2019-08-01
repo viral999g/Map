@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Line Chart Multiple Axes</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script src="utils.js"></script>
+	<style>
+	canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	</style>
+</head>
+
+<body>
+	<div style="width:75%;">
+		<canvas id="canvas"></canvas>
+	</div>
+	<button id="randomizeData">Randomize Data</button>
+	<script>
+		var lineChartData = {
+			labels: ['2014 LS', '2014 VS', '2019 LS'],
+			datasets: [{
+				label: 'My First dataset',
+				borderColor: window.chartColors.red,
+				backgroundColor: window.chartColors.red,
+				fill: false,
+				data: [
+					45,
+					22,
+					23,
+				],
+				yAxisID: 'y-axis-1',
+			}, {
+				label: 'My Second dataset',
+				borderColor: window.chartColors.blue,
+				backgroundColor: window.chartColors.blue,
+				fill: false,
+				data: [
+					46,
+					68,
+					36
+				],
+				yAxisID: 'y-axis-1'
+      },
+      {
+				label: 'My Third dataset',
+				borderColor: window.chartColors.blue,
+				backgroundColor: window.chartColors.blue,
+				fill: false,
+				data: [
+					8,
+					10,
+					42
+				],
+				yAxisID: 'y-axis-1'
+			}]
+		};
+		function showChart() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myLine = Chart.Line(ctx, {
+				data: lineChartData,
+				options: {
+					responsive: true,
+					hoverMode: 'index',
+					stacked: false,
+					title: {
+						display: true,
+						text: 'Voting Trends'
+					},
+					scales: {
+						yAxes: [{
+							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							display: true,
+							position: 'left',
+							id: 'y-axis-1',
+						}, {
+							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							display: false,
+							position: 'right',
+							id: 'y-axis-2',
+							// grid line settings
+							gridLines: {
+								drawOnChartArea: false, // only want the grid lines for one axis to show up
+							},
+						}],
+					}
+				}
+			});
+    };
+    showChart();
+    console.log(lineChartData.datasets)
+		document.getElementById('randomizeData').addEventListener('click', function() {
+			lineChartData.datasets.forEach(function(dataset) {
+				dataset.data = dataset.data.map(function() {
+					return randomScalingFactor();
+				});
+			});
+			window.myLine.update();
+		});
+	</script>
+</body>
+
+</html>

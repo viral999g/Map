@@ -5,9 +5,14 @@ from selenium import webdriver
 
 file = open('full.html', 'a')
 
-driver = webdriver.Chrome()
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
 
-for i in range(153, 154):
+
+driver = webdriver.Chrome(options=options)
+
+for i in range(1, 154):
+  print(i)
 
   try:
     driver.get('http://13.59.213.80/ballarpur/village_data.html?location_id=' + str(i))

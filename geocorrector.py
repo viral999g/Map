@@ -12,7 +12,7 @@ VILLAGESCOLL = MYDB['villages_d']
 
 
 file1 = open('abc1.json', "r")
-file2 = open('final_abc1.json', "w")
+file2 = open('abc2.json', "w")
 
 data = json.loads(file1.read())
 features = data['features']
@@ -21,12 +21,8 @@ new_features = []
 
 for f in features:
     try:
-        f['properties']['loc_id'] = f['properties']['loc id']
-        name = VILLAGESCOLL.find_one({'location_id': str(f['properties']['loc id'])})['name_en']
-        print(name)
-
-        f['properties']['name_en'] = name
-
+        if f['properties']['loc_id'] == None:
+            f['properties']['color'] = '#008000'
 
         new_features.append(f)
 
