@@ -157,7 +157,7 @@
                 </tbody>
             </table>
 
-            <div style="width:100%;">
+            <div style="width:100%;height: 40%;">
                 <canvas id="canvas"></canvas>
             </div>
     </body>
@@ -188,50 +188,57 @@
         var data_2014_ls_html = '';
         var data_2014_vs_html = '';
 
+        var bjp_ls_14 = 0;
+        var bjp_vs_14 = 0;
+        var bjp_ls_19 = 0;
+
+        var inc_ls_14 = 0;
+        var inc_vs_14 = 0;
+        var inc_ls_19 = 0;
+
+        var others_ls_14 = 0;
+        var others_vs_14 = 0;
+        var others_ls_19 = 0;
+
+        var bjp_data = [];
+        var inc_data = [];
+        var others_data = [];
+
+
         var lineChartData = {
 			labels: ['2014 LS', '2014 VS', '2019 LS'],
 			datasets: [{
-				label: 'My First dataset',
-				borderColor: window.chartColors.red,
-				backgroundColor: window.chartColors.red,
+				label: 'BJP',
+				borderColor: '#ff9933',
+				backgroundColor: '#ff9933',
 				fill: false,
-				data: [
-					45,
-					22,
-					23,
-				],
+				data: [],
 				yAxisID: 'y-axis-1',
 			}, {
-				label: 'My Second dataset',
-				borderColor: window.chartColors.blue,
-				backgroundColor: window.chartColors.blue,
+				label: 'INC',
+				borderColor: '#0000ff',
+				backgroundColor: '#0000ff',
 				fill: false,
-				data: [
-					46,
-					68,
-					36
-				],
+				data: [],
 				yAxisID: 'y-axis-1'
       },
       {
-				label: 'My Third dataset',
-				borderColor: window.chartColors.blue,
-				backgroundColor: window.chartColors.blue,
+				label: 'Others',
+				borderColor: '#ffff00',
+				backgroundColor: '#ffff00',
 				fill: false,
-				data: [
-					8,
-					10,
-					42
-				],
+				data: [],
 				yAxisID: 'y-axis-1'
 			}]
 		};
 		function showChart() {
-			var ctx = document.getElementById('canvas').getContext('2d');
+            var ctx = document.getElementById('canvas').getContext('2d');
+            ctx.height = 400;
 			window.myLine = Chart.Line(ctx, {
 				data: lineChartData,
 				options: {
-					responsive: true,
+                    responsive: true,
+                    maintainAspectRatio: false,
 					hoverMode: 'index',
 					stacked: false,
 					title: {
@@ -250,14 +257,21 @@
                                 }
                             }
 						}],
-					}
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return ' ' + data.datasets[tooltipItem.datasetIndex].label + ' : ' + tooltipItem.yLabel + '%'
+                            }
+                        }
+                    }
 				}
 			});
         };
 
 
         $(document).ready(function(){
-        $.ajax({ url: "http://localhost:8000/village_data?location_id=" + location_id,
+        $.ajax({ url: "http://13.59.213.80:8000/village_data?location_id=" + location_id,
                 type:'GET',
                 success: function(data){
                     data = JSON.parse(data);
@@ -302,7 +316,15 @@
 
                    votes_data_2019 = json_2019['votes_data']
                    votes_data_2019.forEach(element => {
-                    data_2019_html += "<tr><td>"+ (parseInt(votes_data_2019.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
+                        if (element['party'] == 'BJP'){
+                            bjp_ls_19 += parseInt(element['votes_per'].replace('%', ''))
+                        } else if (element['party'] == 'INC'){
+                            inc_ls_19 += parseInt(element['votes_per'].replace('%', ''))
+                        } else {
+                            others_ls_19 += parseInt(element['votes_per'].replace('%', ''))
+                        }
+
+                        data_2019_html += "<tr><td>"+ (parseInt(votes_data_2019.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
                    });
 
                    data_2019.innerHTML = data_2019_html;
@@ -310,7 +332,15 @@
 
                    votes_data_2014_ls = data['ls_2014']['votes_data']
                    votes_data_2014_ls.forEach(element => {
-                    data_2014_ls_html += "<tr><td>"+ (parseInt(votes_data_2014_ls.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
+                        if (element['party'] == 'BJP'){
+                            bjp_ls_14 += parseInt(element['votes_per'].replace('%', ''))
+                        } else if (element['party'] == 'INC'){
+                            inc_ls_14 += parseInt(element['votes_per'].replace('%', ''))
+                        } else {
+                            others_ls_14 += parseInt(element['votes_per'].replace('%', ''))
+                        }
+
+                        data_2014_ls_html += "<tr><td>"+ (parseInt(votes_data_2014_ls.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
                    });
 
                    ls_data_2014.innerHTML = data_2014_ls_html;
@@ -318,10 +348,36 @@
 
                    votes_data_2014_vs = data['vs_2014']['votes_data']
                    votes_data_2014_vs.forEach(element => {
-                    data_2014_vs_html += "<tr><td>"+ (parseInt(votes_data_2014_vs.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
+                        if (element['party'] == 'BJP'){
+                            bjp_vs_14 += parseInt(element['votes_per'].replace('%', ''))
+                        } else if (element['party'] == 'INC'){
+                            inc_vs_14 += parseInt(element['votes_per'].replace('%', ''))
+                        } else {
+                            others_vs_14 += parseInt(element['votes_per'].replace('%', ''))
+                        }
+                        data_2014_vs_html += "<tr><td>"+ (parseInt(votes_data_2014_vs.indexOf(element)) + 1).toString() + "</td><td>" + element['name'] + "</td><td>" + element['party'] + "</td><td>" + element['votes'] + "</td><td>" + element['votes_per'] + "</td></tr>";
                    });
 
                    vs_data_2014.innerHTML = data_2014_vs_html;
+
+                   bjp_data.push(bjp_ls_14)
+                   bjp_data.push(bjp_vs_14)
+                   bjp_data.push(bjp_ls_19)
+
+                   inc_data.push(inc_ls_14)
+                   inc_data.push(inc_vs_14)
+                   inc_data.push(inc_ls_19)
+
+
+                   others_data.push(others_ls_14)
+                   others_data.push(others_ls_19)
+                   others_data.push(others_vs_14)
+
+                   lineChartData.datasets[0].data = bjp_data
+                   lineChartData.datasets[1].data = inc_data
+                   lineChartData.datasets[2].data = others_data
+
+
 
                    showChart()
 
