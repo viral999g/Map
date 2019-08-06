@@ -49,6 +49,51 @@
     text-align: center
   }
 
+  #mydiv2 {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: left;
+  width: fit-content;
+  padding: 0;
+  margin-left: 2%;
+  margin-top: 2%;
+  right: 2%
+  }
+
+  #mydivheader2 {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+    text-align: center
+  }
+
+  #mydiv3 {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: left;
+  width: fit-content;
+  padding: 0;
+  margin-left: 2%;
+  margin-top: 2%;
+  right: 2%;
+  bottom: 2%
+  }
+
+  #mydivheader3 {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+    text-align: center
+  }
+
 
   
 </style>
@@ -76,9 +121,34 @@
         <div class="radio">
             <label><input type="radio" name="optradio" onchange="showLayer('3')">Vidhan Sabha elections 2014</label>
         </div>
+        <div class="radio">
+          <label><input type="radio" name="optradio" onchange="showLayer('9')">Booths Grade</label>
+      </div>
       </form>
     </div>
-              
+
+    <div id="mydiv2">
+      <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+      <div id="mydivheader2">Top 15 Locations Caste Wise</div>
+      <form id="radio_btns2" style="padding: 0.5em; width: 180px; padding-left: 65px; font-size: 18px">
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('4')">कुणबी</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('5')">गोंड</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('6')">माळी</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('7')">तेली</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('8')">बौद्ध</label>
+        </div>
+      </form>
+    </div>
+ 
 
     <div id='map'></div>
   </div>
@@ -131,6 +201,26 @@
       else if(radio_id == '3'){
           map.getSource('maine').setData('final_abc3.json')
       }
+      else if(radio_id == '4'){
+          map.getSource('maine').setData('caste_1.json')
+      }
+      else if(radio_id == '5'){
+          map.getSource('maine').setData('caste_2.json')
+      }
+      else if(radio_id == '6'){
+          map.getSource('maine').setData('caste_3.json')
+      }
+      else if(radio_id == '7'){
+          map.getSource('maine').setData('caste_4.json')
+      }
+      else if(radio_id == '8'){
+          map.getSource('maine').setData('caste_5.json')
+      }
+      else if(radio_id == '9'){
+          map.getSource('maine').setData('cat.json')
+      }
+      
+
   }
 
   map.on('mousemove', 'maine', function (e) {

@@ -23,4 +23,4 @@ data = VILLAGESCOLL_SERVER.find({}, {"_id": 0})
 for d in data:
   VILLAGESCOLL_LOCAL.insert(d)
 
-# file.write(json.dumps(obj))
+file.write(json.dumps(obj))
