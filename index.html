@@ -15,6 +15,8 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
+
+<link rel="stylesheet" type="text/css" href="style.css">
 <style>
   body { margin:0; padding:0; }
   .container{
@@ -77,15 +79,24 @@
   background-color: #f1f1f1;
   border: 1px solid #d3d3d3;
   text-align: left;
-  width: fit-content;
+  width: 150px;
   padding: 0;
   margin-left: 2%;
   margin-top: 2%;
-  right: 2%;
+  left: 2%;
   bottom: 2%
   }
 
   #mydivheader3 {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+    text-align: center
+  }
+
+  #mydivheader4 {
     padding: 10px;
     cursor: move;
     z-index: 10;
@@ -113,7 +124,21 @@
       <div id="mydivheader">Elections</div>
       <form id="radio_btns" style="padding: 0.5em">
         <div class="radio">
-            <label><input type="radio" name="optradio" onchange="showLayer('1')" checked>Lok Sabha Elections 2019</label>
+          <label><input type="radio" name="optradio" onchange="showLayer('9')" checked>Booths Grade
+            <div class="help-tip" style="float: right">
+                <p style="background-color: #F05E23">A: Booths won by BJP in all three elections</p>
+                <p style="background-color: #fda50f">B+: Booths won by BJP in 2 elections or in just 2014 Vidhan Sabha election</p>
+                <p style="background-color: #0000ff">B: Booths won by BJP in just 1 election</p>
+                <p style="background-color: #7CFC00">C: Booths lost by BJP in all 3 elections</p>
+              </div>
+          </label>
+          
+      </div>
+
+    
+      
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('1')">Lok Sabha Elections 2019</label>
         </div>
         <div class="radio">
             <label><input type="radio" name="optradio" onchange="showLayer('2')">Lok Sabha Elections 2014</label>
@@ -121,10 +146,33 @@
         <div class="radio">
             <label><input type="radio" name="optradio" onchange="showLayer('3')">Vidhan Sabha elections 2014</label>
         </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio" onchange="showLayer('9')">Booths Grade</label>
-      </div>
+        
       </form>
+
+      <div style="margin-top: 10px" id="mydivheader3">Color By Parties</div>
+      <table style="width: 100%">
+        <tr>
+          <td style="background-color: #ff9933; text-align: center; width: 100px">BJP</td>
+          <td style="background-color: #0000FF; text-align: center; color: #fff; width: 100px">INC</td>
+          <td style="background-color: #FFC0CB; text-align: center; width: 100px">Others</td>
+        </tr>
+      </table>
+
+      <table style="width: 100%">
+        <tr>
+          <td id="mydivheader4" colspan="3">Color by categories</td>
+        </tr>
+
+        <tr>
+          <td style="background-color: #F05E23; text-align: center; width: 100px" >A</td>
+          <td style="background-color: #0000ff; text-align: center; color: #fff; width: 100px">B</td>
+        </tr>
+        <tr>
+          <td style="background-color: #fda50f; text-align: center;width: 100px">B+</td>
+          <td style="background-color: #7CFC00; text-align: center;width: 100px">C</td>
+        </tr>
+
+      </table>
     </div>
 
     <div id="mydiv2">
@@ -147,6 +195,20 @@
             <label><input type="radio" name="optradio" onchange="showLayer('8')">बौद्ध</label>
         </div>
       </form>
+
+      
+    </div>
+
+    <div id="mydiv3">
+      <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+      
+
+      <!-- <div id="mydivheader3">Color By Categories</div>
+      <table style="width: 100%">
+        <tbody style="width: 100%">
+        
+      </tbody>
+      </table>  -->
     </div>
  
 
@@ -176,7 +238,7 @@
       'type': 'fill',
       'source': {
       'type': 'geojson',
-      'data': 'final_abc1.json'
+      'data': 'cat.json'
     },
     'layout': {},
     'paint': {
@@ -246,5 +308,8 @@
 
 
 </script> 
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdn.tutorialzine.com/misc/enhance/v2.js" async></script>
 
 </html>
