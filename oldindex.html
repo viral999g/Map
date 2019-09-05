@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>Chandrapur District</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
+
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+  body { margin:0; padding:0; }
+  .container{
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+    margin: 0%
+  }
+
+  #map { position:absolute; top:0; bottom:0; width:100%; height: 100%;}
+
+  #draggable { width: 150px; height: auto; padding: 0.5em; border: 2px solid black; z-index: 999; background-color:cornflowerblue; margin-left: 10%; margin-top: 10%}
+
+  #mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: left;
+  width: 230px;
+  padding: 0;
+  margin-left: 2%;
+  margin-top: 2%
+  }
+
+  #mydivheader {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+    text-align: center
+  }
+
+  #mydiv2 {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: left;
+  width: fit-content;
+  padding: 0;
+  margin-left: 2%;
+  margin-top: 2%;
+  right: 2%
+  }
+
+  #mydivheader2 {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+    text-align: center
+  }
+
+  #mydiv3 {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: left;
+  width: 150px;
+  padding: 0;
+  margin-left: 2%;
+  margin-top: 2%;
+  left: 2%;
+  bottom: 2%
+  }
+
+  #mydivheader3 {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+    text-align: center
+  }
+
+  #mydivheader4 {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+    text-align: center
+  }
+
+
+  
+</style>
+
+<script>
+    $( function() {
+        $( "#draggable" ).draggable();
+    } );
+</script>
+</head>
+<body>
+ 
+  <div class="container">
+
+    <div id="mydiv">
+      <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+      <div id="mydivheader">Elections</div>
+      <form id="radio_btns" style="padding: 0.5em">
+        <div class="radio">
+          <label><input type="radio" name="optradio" onchange="showLayer('9')" checked>Booths Grade
+            <div class="help-tip" style="float: right">
+                <p style="background-color: #F05E23">A: Booths won by BJP in all three elections</p>
+                <p style="background-color: #fda50f">B+: Booths won by BJP in 2 elections or in just 2014 Vidhan Sabha election</p>
+                <p style="background-color: #0000ff">B: Booths won by BJP in just 1 election</p>
+                <p style="background-color: #7CFC00">C: Booths lost by BJP in all 3 elections</p>
+              </div>
+          </label>
+          
+      </div>
+
+    
+      
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('1')">Lok Sabha Elections 2019</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('2')">Lok Sabha Elections 2014</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('3')">Vidhan Sabha elections 2014</label>
+        </div>
+        
+      </form>
+
+      <div style="margin-top: 10px" id="mydivheader3">Color By Parties</div>
+      <table style="width: 100%">
+        <tr>
+          <td style="background-color: #ff9933; text-align: center; width: 100px">BJP</td>
+          <td style="background-color: #0000FF; text-align: center; color: #fff; width: 100px">INC</td>
+          <td style="background-color: #FFC0CB; text-align: center; width: 100px">Others</td>
+        </tr>
+      </table>
+
+      <table style="width: 100%">
+        <tr>
+          <td id="mydivheader4" colspan="3">Color by categories</td>
+        </tr>
+
+        <tr>
+          <td style="background-color: #F05E23; text-align: center; width: 100px" >A</td>
+          <td style="background-color: #0000ff; text-align: center; color: #fff; width: 100px">B</td>
+        </tr>
+        <tr>
+          <td style="background-color: #fda50f; text-align: center;width: 100px">B+</td>
+          <td style="background-color: #7CFC00; text-align: center;width: 100px">C</td>
+        </tr>
+
+      </table>
+    </div>
+
+    <div id="mydiv2">
+      <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+      <div id="mydivheader2">Top 15 Locations Caste Wise</div>
+      <form id="radio_btns2" style="padding: 0.5em; width: 180px; padding-left: 65px; font-size: 18px">
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('4')">कुणबी</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('5')">गोंड</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('6')">माळी</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('7')">तेली</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" onchange="showLayer('8')">बौद्ध</label>
+        </div>
+      </form>
+
+      
+    </div>
+
+    <div id="mydiv3">
+      <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+      
+
+      <!-- <div id="mydivheader3">Color By Categories</div>
+      <table style="width: 100%">
+        <tbody style="width: 100%">
+        
+      </tbody>
+      </table>  -->
+    </div>
+ 
+
+    <div id='map'></div>
+  </div>
+</body>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoidmlyYWw5OTlnIiwiYSI6ImNqeWloejNuYTA5c3IzY3FpbTRsMDNhNzUifQ.kC5CsBwOOiw7nvzyppoZkQ';
+  var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [79.53157424926758, 20.03166103287417],
+  zoom: 9, 
+  minZoom: 9
+  });
+
+  var popup = new mapboxgl.Popup({
+        closeButton: false
+    });
+  
+  map.on('load', function () {
+  
+  map.addLayer(
+    {
+      'id': 'maine',
+      'type': 'fill',
+      'source': {
+      'type': 'geojson',
+      'data': 'cat.json'
+    },
+    'layout': {},
+    'paint': {
+      'fill-color': {
+          type: 'identity',
+          property: 'color',
+      },
+      'fill-opacity': 0.8
+    }
+    }
+  );
+  });
+
+
+  function showLayer(radio_id){
+      if(radio_id == '1'){
+          map.getSource('maine').setData('final_abc1.json')
+      }
+      else if(radio_id == '2'){
+          map.getSource('maine').setData('final_abc2.json')
+      }
+      else if(radio_id == '3'){
+          map.getSource('maine').setData('final_abc3.json')
+      }
+      else if(radio_id == '4'){
+          map.getSource('maine').setData('caste_1.json')
+      }
+      else if(radio_id == '5'){
+          map.getSource('maine').setData('caste_2.json')
+      }
+      else if(radio_id == '6'){
+          map.getSource('maine').setData('caste_3.json')
+      }
+      else if(radio_id == '7'){
+          map.getSource('maine').setData('caste_4.json')
+      }
+      else if(radio_id == '8'){
+          map.getSource('maine').setData('caste_5.json')
+      }
+      else if(radio_id == '9'){
+          map.getSource('maine').setData('cat.json')
+      }
+      
+
+  }
+
+  map.on('mousemove', 'maine', function (e) {
+    map.getCanvas().style.cursor = 'pointer';
+    popup
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.name_en)
+    .addTo(map);
+  });
+
+  map.on('mouseleave', 'maine', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+  map.on('click', 'maine', function(e) {
+      location_id = e.features[0].properties.loc_id;
+      console.log(location_id)
+      if(location_id != 'null'){
+        window.open("village_data.html?location_id=" + location_id)
+      }
+  });
+
+
+</script> 
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdn.tutorialzine.com/misc/enhance/v2.js" async></script>
+
+</html>
